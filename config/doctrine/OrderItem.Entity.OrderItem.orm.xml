@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
+                                      http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+    <entity name="App\Component\OrderItem\Entity\OrderItem" table="bookshop_order_item">
+        <id name="id" type="integer">
+            <generator strategy="AUTO"/>
+        </id>
+        <field name="quantity" type="integer"/>
+        <field name="unitPrice" type="integer"/>
+        <field name="total" type="integer"/>
+        <field name="taxValue" type="integer" nullable="true"/>
+
+        <many-to-one field="order" target-entity="App\Component\Order\Entity\Order" inversed-by="items">
+            <join-column name="order_id" referenced-column-name="id" nullable="false" on-delete="CASCADE"/>
+        </many-to-one>
+
+        <many-to-one field="product" target-entity="App\Component\Product\Entity\Product">
+            <join-column name="product_id" referenced-column-name="id" nullable="false"/>
+        </many-to-one>
+    </entity>
+</doctrine-mapping>

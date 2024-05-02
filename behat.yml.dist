@@ -1,0 +1,11 @@
+default:
+    suites:
+        default:
+            contexts:
+                - App\Tests\Behat\ProductContext
+
+    extensions:
+        DAMA\DoctrineTestBundle\Behat\ServiceContainer\DoctrineExtension: ~
+        FriendsOfBehat\SymfonyExtension:
+            kernel:
+                class: App\Kernel

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
+                                      http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+    <entity name="App\Component\Order\Entity\Order" table="bookshop_order">
+        <id name="id" type="integer">
+            <generator strategy="AUTO"/>
+        </id>
+
+        <field name="itemsTotal" type="integer"/>
+        <field name="adjustmentsTotal" type="integer"/>
+        <field name="total" type="integer"/>
+
+        <one-to-many field="items" target-entity="App\Component\OrderItem\Entity\OrderItem" mapped-by="order"
+                     orphan-removal="true">
+            <cascade>
+                <cascade-all/>
+            </cascade>
+        </one-to-many>
+
+        <many-to-one field="user" target-entity="App\Component\User\Entity\User" inversed-by="orders">
+            <join-column name="user_id" referenced-column-name="id" nullable="true"/>
+            <cascade>
+                <cascade-persist/>
+            </cascade>
+        </many-to-one>
+    </entity>
+</doctrine-mapping>
