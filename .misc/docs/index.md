@@ -30,6 +30,10 @@
 | price     | cena bazowa produktu za sztukę                                                   |
 | tax\_rate | stawka podatku podana w procentach (`null` oznacza produkt zwolniony z podatku)  |
 
-## Dokumentacja endpointu
+`bookshop_promotion` - zawiera informacje o dostępnych promocjach
 
-W [pliku](contract.yaml) znajduje się dokumentacja w formacie OpenApi, zawierająca kontrakt dla endpointu do przygotowania. Dokumentację należy uzupełnić o adres do endpointu. Zakładamy pracę w architekturze REST. 
+| Kolumna                | Opis                                                                              |
+|:-----------------------|:----------------------------------------------------------------------------------|
+| type                   | typ promocji (`1` - na przedmiot zamówienia; `2` - na całe zamówienie             |
+| percentage\_discount   | procentowa wartość przyznanego rabatu                                             |
+| product\_types\_filter | typy produktów, do których powinna zostać naliczona promocja (tylko dla `type=1`) |

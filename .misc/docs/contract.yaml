@@ -20,6 +20,18 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Order'
+        404:
+          description: Order not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        422:
+          description: Validation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationResponse'
 
 components:
   schemas:
@@ -88,3 +100,21 @@ components:
           type: string
         name:
           type: string
+
+    ErrorResponse:
+      type: object
+      properties:
+        message:
+          type: string
+      required:
+        - message
+
+    ValidationResponse:
+      type: object
+      properties:
+        violations:
+          type: array
+          items:
+            type: string
+      required:
+        - violations
