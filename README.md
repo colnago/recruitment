@@ -4,7 +4,7 @@
 
 1. Zadanie wymaga posiadania zainstalowanego środowiska Docker (albo Docker Desktop) 
 2. Polecenie `make start` pozwoli uruchomić cały stack
-3. Otwórz `https://localhost` w przeglądarce i zaakceptuje automatycznie wygenerowany certyfikat TLS
+3. Otwórz `http://localhost` w przeglądarce
 4. Polecenie `make down` zatrzymuje Dockera
 
 Więcej poleceń znajduje się w pliku `Makefile`
@@ -35,14 +35,14 @@ Więcej poleceń znajduje się w pliku `Makefile`
 * stwórz endpoint, który pozwoli przypisać promocję o zadanym ID (`bookshop_promotion`) do stworzonego zamówienia,
 * dodaj endpoint, który pobierze informacje o zamówieniu i wyświetli dane z tabelki w formacie podanym w [specyfikacji](.misc/docs/contract.yaml).
 
-3. Zadanie dodatkowe - zaimplementuj możliwość reprezentowania (wyświetlania) kwot w zamówieniu w walucie PLN i EUR; dodaj mechanizm przeliczenia wartości zamówienia i cen przedmiotów w odpowiedniej walucie po kursie zdefiniowanym w stałej; w endpoincie z punktu 2, który umożliwia pobieranie szczegółów zamówienia, dodaj parametr z wybraną walutą (`PLN` albo `EUR`) na podstawie którego zostaną zwrócone odpowiednie dane.
+3. Zadanie dodatkowe — zaimplementuj możliwość reprezentowania (wyświetlania) kwot w zamówieniu w walucie PLN i EUR; dodaj mechanizm przeliczenia wartości zamówienia i cen przedmiotów w odpowiedniej walucie po kursie zdefiniowanym w stałej; w endpoincie z punktu 2, który umożliwia pobieranie szczegółów zamówienia, dodaj parametr z wybraną walutą (`PLN` albo `EUR`) na podstawie którego zostaną zwrócone odpowiednie dane.
 
 ### Dodatkowe informacje
 
 1. koszyk powinien operować na groszach – żeby uniknąć błędów operacji zmiennoprzecinkowych
 2. stworzone endpointy powinny posiadać dokumentację w Openapi 3.0.x
 3. architektura rozwiązania jest także istotna (struktura projektu oraz klasy mają charakter przykładowy)
-4. napisz testy klas (unit testy) oraz testy funkcjonalne, które odpowiadają regułom biznesowym
+4. napisz unit testy oraz testy funkcjonalne (PhpUnit albo Behat), które odpowiadają regułom biznesowym
 
 ### Szczegóły działania mechanizmu promocji
 
