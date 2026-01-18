@@ -4,12 +4,20 @@ declare(strict_types=1);
 
 namespace App\Component\Order\Service;
 
+use App\Component\Currency\CurrencyConverter;
 use App\Component\Order\Entity\Order;
 
 class OrderViewBuilder
 {
-    public function build(Order $order): array
+    public function __construct(
+        private readonly CurrencyConverter $converter,
+    ) {}
+
+    public function build(Order $order, ?string $currency = null): array
     {
+        $currency = $this->converter->normalize($currency);
+        $convert = fn (int $v): int => $this->converter->convert($v, $currency);
+
         $items = [];
         foreach ($order->getItems() as $item) {
             $product = $item->getProduct();
@@ -20,26 +28,27 @@ class OrderViewBuilder
                     'code' => $product->getCode(),
                     'name' => $product->getName(),
                     'type' => $product->getType(),
-                    'price' => $product->getPrice(),
-                    'taxRate' => $product->getTaxRate(),
+                    'price' => $convert($product->getPrice()),
+                    'taxRate' => $convert($product->getTaxRate()),
                 ],
-                'unitPrice' => $item->getUnitPrice(),
+                'unitPrice' => $convert($item->getUnitPrice()),
                 'quantity' => $item->getQuantity(),
-                'discount' => $item->getDiscount(),
-                'discountValue' => $item->getDiscountValue(),
-                'distributedOrderDiscountValue' => $item->getDistributedOrderDiscountValue(),
-                'discountedUnitPrice' => $item->getDiscountedUnitPrice(),
-                'total' => $item->getTotal(),
-                'taxValue' => $item->getTaxValue(),
+                'discount' => $convert($item->getDiscount() ?? 0),
+                'discountValue' => $convert($item->getDiscountValue()),
+                'distributedOrderDiscountValue' => $convert($item->getDistributedOrderDiscountValue()),
+                'discountedUnitPrice' => $convert($item->getDiscountedUnitPrice()),
+                'total' => $convert($item->getTotal()),
+                'taxValue' => $convert($item->getTaxValue()),
             ];
         }
 
         return [
             'id' => $order->getId(),
-            'itemsTotal' => $order->getItemsTotal(),
-            'adjustmentsTotal' => $order->getAdjustmentsTotal(),
-            'taxTotal' => $order->getTaxTotal(),
-            'total' => $order->getTotal(),
+            'currency' => $currency,
+            'itemsTotal' => $convert($order->getItemsTotal()),
+            'adjustmentsTotal' => $convert($order->getAdjustmentsTotal()),
+            'taxTotal' => $convert($order->getTaxTotal()),
+            'total' => $convert($order->getTotal()),
             'items' => $items,
         ];
     }
