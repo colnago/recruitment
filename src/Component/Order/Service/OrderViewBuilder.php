@@ -25,6 +25,10 @@ class OrderViewBuilder
                 ],
                 'unitPrice' => $item->getUnitPrice(),
                 'quantity' => $item->getQuantity(),
+                'discount' => $item->getDiscount(),
+                'discountValue' => $item->getDiscountValue(),
+                'distributedOrderDiscountValue' => $item->getDistributedOrderDiscountValue(),
+                'discountedUnitPrice' => $item->getDiscountedUnitPrice(),
                 'total' => $item->getTotal(),
                 'taxValue' => $item->getTaxValue(),
             ];
@@ -33,6 +37,7 @@ class OrderViewBuilder
         return [
             'id' => $order->getId(),
             'itemsTotal' => $order->getItemsTotal(),
+            'adjustmentsTotal' => $order->getAdjustmentsTotal(),
             'taxTotal' => $order->getTaxTotal(),
             'total' => $order->getTotal(),
             'items' => $items,
