@@ -6,6 +6,7 @@ namespace App\Component\OrderItem\Entity;
 
 use App\Component\Order\Entity\Order;
 use App\Component\Product\Entity\Product;
+use App\Component\Promotion\Entity\Promotion;
 
 class OrderItem
 {
@@ -16,6 +17,12 @@ class OrderItem
     protected int $unitPrice;
     protected ?int $taxValue;
     protected int $total = 0;
+    private ?int $discount = null;
+    private int $discountValue = 0;
+    private int $distributedOrderDiscountValue = 0;
+    private int $discountedUnitPrice = 0;
+
+    private ?Promotion $itemPromotion = null;
 
     public function getId(): int
     {
@@ -90,5 +97,55 @@ class OrderItem
     public function recalculateTotal(): void
     {
         $this->total = $this->getSubtotal();
+    }
+
+    public function getDiscount(): ?int
+    {
+        return $this->discount;
+    }
+
+    public function setDiscount(?int $discount): void
+    {
+        $this->discount = $discount;
+    }
+
+    public function getDiscountValue(): int
+    {
+        return $this->discountValue;
+    }
+
+    public function setDiscountValue(int $discountValue): void
+    {
+        $this->discountValue = $discountValue;
+    }
+
+    public function getDistributedOrderDiscountValue(): int
+    {
+        return $this->distributedOrderDiscountValue;
+    }
+
+    public function setDistributedOrderDiscountValue(int $value): void
+    {
+        $this->distributedOrderDiscountValue = $value;
+    }
+
+    public function getDiscountedUnitPrice(): int
+    {
+        return $this->discountedUnitPrice;
+    }
+
+    public function setDiscountedUnitPrice(int $price): void
+    {
+        $this->discountedUnitPrice = $price;
+    }
+
+    public function getItemPromotion(): ?Promotion
+    {
+        return $this->itemPromotion;
+    }
+
+    public function setItemPromotion(?Promotion $promotion): void
+    {
+        $this->itemPromotion = $promotion;
     }
 }

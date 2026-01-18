@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Component\Order\Entity;
 
 use App\Component\OrderItem\Entity\OrderItem;
+use App\Component\Promotion\Entity\Promotion;
 use App\Component\User\Entity\User;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -20,6 +21,8 @@ class Order
      */
     protected int $taxTotal = 0;
     protected int $total = 0;
+    private ?int $orderDiscount = null;
+    private ?Promotion $orderPromotion = null;
     /**
      * @var Collection<array-key, OrderItem>
      */
@@ -85,6 +88,26 @@ class Order
         $this->taxTotal = $taxTotal;
     }
 
+    public function getOrderPromotion(): ?Promotion
+    {
+        return $this->orderPromotion;
+    }
+
+    public function setOrderPromotion(?Promotion $promotion): void
+    {
+        $this->orderPromotion = $promotion;
+    }
+
+    public function getOrderDiscount(): ?int
+    {
+        return $this->orderDiscount;
+    }
+
+    public function setOrderDiscount(?int $orderDiscount): void
+    {
+        $this->orderDiscount = $orderDiscount;
+    }
+
     /**
      * @return Collection<array-key, OrderItem>
      */
@@ -148,6 +171,11 @@ class Order
             $this->itemsTotal += $item->getTotal();
         }
 
+        $this->recalculateTotal();
+    }
+
+    public function recalculateTotalPublic(): void
+    {
         $this->recalculateTotal();
     }
 }
