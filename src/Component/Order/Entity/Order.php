@@ -12,12 +12,13 @@ use Doctrine\Common\Collections\Collection;
 class Order
 {
     protected int $id;
-    protected User $user;
+    protected ?User $user = null;
     protected int $itemsTotal = 0;
     protected int $adjustmentsTotal = 0;
     /**
      * Items total + adjustments total.
      */
+    protected int $taxTotal = 0;
     protected int $total = 0;
     /**
      * @var Collection<array-key, OrderItem>
@@ -34,12 +35,12 @@ class Order
         return $this->id;
     }
 
-    public function getUser(): User
+    public function getUser(): ?User
     {
         return $this->user;
     }
 
-    public function setUser(User $user): void
+    public function setUser(?User $user): void
     {
         $this->user = $user;
     }
@@ -47,6 +48,11 @@ class Order
     public function getItemsTotal(): int
     {
         return $this->itemsTotal;
+    }
+
+    public function setItemsTotal(int $itemsTotal): void
+    {
+        $this->itemsTotal = $itemsTotal;
     }
 
     public function getAdjustmentsTotal(): int
@@ -67,6 +73,16 @@ class Order
     public function setTotal(int $total): void
     {
         $this->total = $total;
+    }
+
+    public function getTaxTotal(): int
+    {
+        return $this->taxTotal;
+    }
+
+    public function setTaxTotal(int $taxTotal): void
+    {
+        $this->taxTotal = $taxTotal;
     }
 
     /**
