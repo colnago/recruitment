@@ -109,6 +109,22 @@ class OrderControllerTest extends WebTestCase
 
         $this->client->request('GET', sprintf('/order/%d', $orderId));
         self::assertResponseIsSuccessful();
+
+        $this->client->request('GET', sprintf('/order/%d?currency=EUR', $orderId));
+        self::assertResponseIsSuccessful();
+
+        $content = (string) $this->client->getResponse()->getContent();
+        $json = $content !== '' ? json_decode($content, true) : null;
+
+        self::assertIsArray($json);
+        self::assertArrayHasKey('data', $json);
+        self::assertIsArray($json['data']);
+
+        self::assertArrayHasKey('currency', $json['data']);
+        self::assertSame('EUR', $json['data']['currency']);
+
+        $this->client->request('GET', sprintf('/order/%d?currency=TEST', $orderId));
+        self::assertContains($this->client->getResponse()->getStatusCode(), [400, 422]);
     }
 
     private function postJson(string $uri, array $payload): array

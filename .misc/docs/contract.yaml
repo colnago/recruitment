@@ -88,6 +88,12 @@ paths:
           name: orderId
           required: true
           schema: { type: integer }
+        - in: query
+          name: currency
+          required: false
+          schema:
+            type: string
+            enum: [ PLN, EUR ]
       responses:
         "200":
           description: Order details
@@ -105,6 +111,8 @@ components:
       properties:
         id:
           type: integer
+        currency:
+          type: string
         itemsTotal:
           type: integer
           description: Sum of all items values (including items discounts)
